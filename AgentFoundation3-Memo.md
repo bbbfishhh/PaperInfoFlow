@@ -182,3 +182,31 @@ ACT-R（适应性思维控制—理性）[199] 是一个综合的认知架构，
 克服这些挑战需要在深度学习、强化学习和认知科学的交叉处寻找创新解决方案。
 
 开发更复杂和适应性的世界模型和记忆系统——那些反映人类认知优势的系统——将为代理更深入地理解其环境铺平道路，从而实现更智能和有意义的交互。
+
+
+RAG 文献：
+
+1. Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich
+Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, et al. Retrieval-augmented generation for knowledgeintensive nlp tasks. Advances in Neural Information Processing Systems, 33:9459–9474, 2020.
+
+2. Ruifeng Yuan, Shichao Sun, Yongqi Li, Zili Wang, Ziqiang Cao, and Wenjie Li. Personalized large language
+model assistant with evolving conditional memory. In Proceedings of the 31st International Conference on
+Computational Linguistics, pages 3764–3777, 2025.
+
+3. Alex Mallen, Akari Asai, Victor Zhong, Rajarshi Das, Daniel Khashabi, and Hannaneh Hajishirzi. When not to
+trust language models: Investigating effectiveness of parametric and non-parametric memories. In Proceedings
+of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages
+9802–9822, 2023.
+
+4. Mehrdad Farahani and Richard Johansson. Deciphering the interplay of parametric and non-parametric memory
+in retrieval-augmented language models. arXiv preprint arXiv:2410.05162, 2024.
+
+5. Xuanwang Zhang, Yunze Song, Yidong Wang, Shuyun Tang, Xinfeng Li, Zhengran Zeng, Zhen Wu, Wei Ye,
+Wenyuan Xu, Yue Zhang, et al. Raglab: A modular and research-oriented unified framework for retrievalaugmented generation. arXiv preprint arXiv:2408.11381, 2024.
+
+6. Hanxing Ding, Liang Pang, Zihao Wei, Huawei Shen, and Xueqi Cheng. Retrieve only when it needs: Adaptive
+retrieval augmentation for hallucination mitigation in large language models. arXiv preprint arXiv:2402.10612,
+2024.
+
+7. Bernal Jiménez Gutiérrez, Yiheng Shu, Yu Gu, Michihiro Yasunaga, and Yu Su. Hipporag: Neurobiologically
+inspired long-term memory for large language models. In NeurIPS, 2024.
