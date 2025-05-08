@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能体感知综述</title>
+    <style>
+        :root {
+            --bg-color: #F9FAFB;
+            --card-bg-color: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --accent-gradient: linear-gradient(to right, #C084FC, #7E22CE);
+            --accent-color-start: #C084FC;
+            --accent-color-end: #7E22CE;
+            --border-radius: 20px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.05);
+            --card-hover-shadow: 0 8px 12px rgba(0, 0, 0, 0.07), 0 15px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            font-size: 14px; /* Base font size for small text */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Limit max width for very large screens */
+        }
+        
+        .main-title-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title-header h1 {
+            font-size: 2.8rem; /* Large title */
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .main-title-header .sub-title {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .bento-card {
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Ensures content stays within rounded corners */
+        }
+
+        .bento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card-title {
+            font-size: 1.4rem; /* Medium size title */
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title .icon {
+            margin-right: 10px;
+            font-size: 1.6rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-content p, .card-content ul {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        
+        .card-content ul {
+            padding-left: 20px;
+            margin-top: 0;
+        }
+        .card-content li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-number {
+            font-size: 1.8rem; /* Large bold number */
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block; /* For gradient to apply correctly */
+        }
+        
+        .category-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 15px;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .category-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 18px;
+            background: var(--accent-gradient);
+            border-radius: 3px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: var(--accent-color-start);
+            opacity: 0.8;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .tag.secondary {
+             background-color: #e2e8f0; /* light gray */
+             color: #475569; /* mid gray */
+        }
+
+        .flow-overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(192, 132, 252, 0.05); /* Very light purple tint */
+            border-radius: 10px;
+        }
+        .flow-step {
+            background: white;
+            border: 1px solid var(--accent-color-start);
+            color: var(--accent-color-end);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .flow-arrow {
+            color: var(--accent-color-end);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        /* Specific grid spans */
+        .span-col-2 {
+            grid-column: span 2;
+        }
+        .span-col-3 {
+            grid-column: span 3;
+        }
+        
+        /* For perception comparison */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .comparison-item strong {
+            color: var(--text-primary);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .bento-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            .span-col-2, .span-col-3 {
+                grid-column: span 1; /* Stack on smaller screens */
+            }
+             .main-title-header h1 {
+                font-size: 2.2rem;
+            }
+            .card-title {
+                font-size: 1.2rem;
+            }
+            .highlight-number {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .bento-grid { gap: 15px; }
+            .bento-card { padding: 20px; }
+            .main-title-header h1 {
+                font-size: 1.8rem;
+            }
+            .main-title-header .sub-title {
+                font-size: 1rem;
+            }
+            .flow-step { font-size: 0.8rem; padding: 5px 10px;}
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-title-header">
+            <h1>智能体感知综述</h1>
+            <p class="sub-title">信息密集型组织的核心能力</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- 0. 一图速览 -->
+            <div class="bento-card span-col-3">
+                <h2 class="card-title"><span class="icon">🧭</span>核心概览</h2>
+                <p>智能体感知是构建高级智能系统的基石，本综述深入探讨其核心要素、技术进展与未来趋势。</p>
+                <div class="flow-overview">
+                    <span class="flow-step">感知对比</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">表示类型</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">优化策略</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">应用示例</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">未来趋势</span>
+                </div>
+            </div>
+            
+            <!-- 1. 感知本质对比 -->
+            <div class="bento-card">
+                <h2 class="card-title"><span class="icon">👤</span>人类感知 (7.1)</h2>
+                <div class="card-content">
+                    <p><strong>感官种类：</strong><span class="highlight-number">10–33</span> 种 (视觉、听觉、味觉、嗅觉、触觉 + 前庭、本体、热觉、痛觉等)</p>
+                    <p><strong>信号范围：</strong></p>
+                    <ul>
+                        <li>视觉: 380–780 nm</li>
+                        <li>听觉: 20 Hz–20 kHz</li>
+                    </ul>
+                    <p><strong>特性：</strong>连续、自然的多模态融合与时空感知。</p>
+                </div>
+            </div>
+
+            <div class="bento-card">
+                <h2 class="card-title"><span class="icon">🤖</span>AI 感知 (7.1)</h2>
+                <div class="card-content">
+                    <p><strong>依赖：</strong>摄像头、麦克风、触觉传感器、IMU等</p>
+                    <p><strong>处理速度：</strong>微秒/纳秒级 (受硬件制约)</p>
+                    <p><strong>融合：</strong>需算法显式融合 (SLAM, 3D重建, 跨模态)</p>
+                    <p><strong>味觉/嗅觉：</strong>尚弱 (仿生嗅觉芯片区分 <span class="highlight-number">~24</span> 气味 vs. 人类 <span class="highlight-number">>4000</span> 种)</p>
+                </div>
+            </div>
+
+            <!-- 2. 感知表示类型 -->
+            <div class="bento-card span-col-2">
+                <h2 class="card-title"><span class="icon">🧩</span>感知表示类型 (7.2)</h2>
+                <div class="card-content">
+                    <h3 class="category-title">单模态模型 (Unimodal)</h3>
+                    <p><span class="tag">文本</span> BOW → BERT → GPT 系列 + LoRA</p>
+                    <p><span class="tag">图像</span> ResNet → YOLO → DETR → DINO 1.5</p>
+                    <p><span class="tag">视频</span> ViViT, VideoMAE</p>
+                    <p><span class="tag">音频</span> Wav2Vec2, FastSpeech 2, Seamless</p>
+                    <p><span class="tag secondary">其他</span> 嗅觉芯片, 味觉传感器, AnySkin触觉, 伤感知</p>
+
+                    <h3 class="category-title">跨模态模型 (Cross-modal)</h3>
+                    <p><span class="tag">T–I</span> CLIP, ALIGN; DALL·E; BLIP</p>
+                    <p><span class="tag">T–V</span> VideoCLIP, Make-A-Video</p>
+                    <p><span class="tag">T–A</span> AudioCLIP, VATT, AudioGen</p>
+                    <p><span class="tag secondary">其他</span> CLIP-Forge (3D); MoCoCLIP (医学)</p>
+                    
+                    <h3 class="category-title">多模态模型 (Multimodal)</h3>
+                    <p><span class="tag">VLM</span> LLaVA, Emu2, MiniGPT-v2, Qwen2-VL</p>
+                    <p><span class="tag">VLA</span> CLIPort, RT-1, VIMA, PerAct</p>
+                    <p><span class="tag">ALM</span> SpeechGPT, LauraGPT, Qwen2-Audio</p>
+                    <p><span class="tag">AVLM</span> ImageBind, Panda-GPT, Unified-IO 2</p>
+                    <p><span class="tag secondary">3D扩展</span> PointLLM, LLaVA-3D</p>
+                </div>
+            </div>
+
+            <!-- 3. 感知系统优化 -->
+            <div class="bento-card">
+                <h2 class="card-title"><span class="icon">⚙️</span>感知系统优化 (7.3)</h2>
+                <div class="card-content">
+                    <h3 class="category-title">模型层</h3>
+                    <ul>
+                        <li>微调 (LoRA, 领域微调, 视觉+LLM融合)</li>
+                        <li>提示工程 (系统/历史/定制提示)</li>
+                        <li>检索增强生成 (RAG)</li>
+                    </ul>
+                    <h3 class="category-title">系统层</h3>
+                    <ul>
+                        <li>预期–再评估机制</li>
+                        <li>多智能体协作 (结构化通信, InsightSee)</li>
+                        <li>智能体专业化 (分工感知)</li>
+                    </ul>
+                    <h3 class="category-title">外部反馈</h3>
+                    <ul>
+                        <li>损失智能体 (LLM动态调整损失)</li>
+                        <li>人类在环 (Human-in-the-Loop)</li>
+                        <li>内容中介 (过滤、精炼输出)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. 典型应用场景 -->
+            <div class="bento-card">
+                <h2 class="card-title"><span class="icon">💡</span>典型应用场景 (7.4)</h2>
+                <div class="card-content">
+                    <p><strong>性能瓶颈：</strong>参数量 ↑ → 延迟 ↑ (H100 vs. A100 vs. RTX 4090)</p>
+                    <h3 class="category-title">主要领域</h3>
+                    <ul>
+                        <li><span class="tag">游戏环境</span> STEVE/Steve-Eye (Minecraft)</li>
+                        <li><span class="tag">创意生成</span> AssistEditor (视频), Audio-Agent (音频)</li>
+                        <li><span class="tag">Web/GUI自动化</span> ExACT, AgentStore, OmniParser</li>
+                        <li><span class="tag">个人助手</span> 低摩擦语音交互 + 情感韵律</li>
+                        <li><span class="tag">具身智能</span> 触觉 & 力反馈 (精确操控)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 5. 挑战与未来方向 -->
+            <div class="bento-card span-col-2">
+                <h2 class="card-title"><span class="icon">🚀</span>挑战与未来方向 (7.5)</h2>
+                <div class="card-content">
+                    <h3 class="category-title">当前瓶颈</h3>
+                    <ul>
+                        <li>多模态表示难捕捉高维细节</li>
+                        <li>对齐 & 融合易丢信息、计算代价高</li>
+                    </ul>
+                    <h3 class="category-title">技术趋势</h3>
+                    <ul>
+                        <li>动态神经架构、自适应表示学习 (元学习, 图表示)</li>
+                        <li>自监督时空对齐 (contrastive) + 因果推理增强鲁棒性</li>
+                        <li>分层注意力 + 可学习门控的上下文感知融合</li>
+                        <li>可微分记忆网络支持长期表征维护</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Conclusion/CTA -->
+            <div class="bento-card span-col-3">
+                <h2 class="card-title"><span class="icon">🌟</span>核心洞察与未来展望</h2>
+                <div class="card-content">
+                    <p>智能体感知正经历从单模态到复杂多模态融合的深刻变革。通过模型、系统与外部反馈的协同优化，结合新兴技术趋势，AI感知将在更多领域展现强大潜力，推动信息密集型组织向更高智能迈进。</p>
+                    <p><strong>关键行动点：</strong></p>
+                    <ul>
+                        <li>关注多模态基础模型的发展与应用。</li>
+                        <li>探索领域特定数据的微调与优化策略。</li>
+                        <li>构建鲁棒、高效的感知系统集成方案。</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
